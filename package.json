@@ -1,0 +1,19 @@
+{
+  "name": "graphql-postgres",
+  "version": "1.0.0",
+  "description": "postgres db with grapql layer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/pg": "^8.6.6",
+    "dotenv": "^16.0.3",
+    "nodemon": "^2.0.22",
+    "typescript": "^5.0.4"
+  }
+}
