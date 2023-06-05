@@ -1,26 +1,38 @@
-version: '3.8'
+version: "3.8"
 services:
-  api:
-    container_name: api
-    restart: always
-    build: .
+  postgraphile:
+    container_name: postgraphile
+    build:
+      context: .
+      dockerfile: postgraphile.Dockerfile
     ports:
-      - ${PORT}:${PORT}
+      - "3001:3001"
+    environment:
+      - DATABASE_URL=postgres://${DB_USER}:${DB_PASSWORD}@db:${DB_PORT}/${DB_NAME}
     depends_on:
-      - db
-    volumes:
-    - .:/usr/src/app
+      db:
+        condition: service_healthy
 
   db:
     container_name: postgres
-    image: postgres:14
+    image: postgres:15
     ports:
-      - '5433:${DB_PORT}'
+      - "${DB_PORT}:${DB_PORT}"
     volumes:
-      - data:/data/db
+      - "/var/lib/postgresql/data"
+      - "./migrations:/docker-entrypoint-initdb.d"
+    command:
+      - postgres
+      - -c
+      - wal_level=logical
+      - -c
+      - shared_preload_libraries=pg_stat_statements
+    healthcheck:
+      test: ["CMD-SHELL", "PGUSER=postgres", "pg_isready"]
+      interval: 1s
+      timeout: 10s
+      retries: 5
     environment:
+      - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_NAME}
-
-volumes: 
- data: {}

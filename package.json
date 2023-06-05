@@ -3,17 +3,43 @@
   "version": "1.0.0",
   "description": "postgres db with grapql layer",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "type": "module",
+  "types": "./dist/index.d.ts",
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "scripts": {
+    "build": "tsc",
+    "serve": "node ./dist/index.js",
+    "dev": " npx --no-install ts-node --transpile-only ./index.ts ",
+    "lint": "npm eslint .",
+    "lint:fix": "npm prettier:fix && npm run eslint --fix .",
+    "eslint": "eslint --ext .js,.jsx,.ts,.tsx",
+    "prettier": "prettier --ignore-path ./.eslintignore",
+    "prettier:all": "npm prettier '**/*.{json,md,html,js,jsx,ts,tsx}'",
+    "prettier:fix": "npm prettier:all --write",
+    "prettier:check": "npm prettier:all --list-different"
+  },
+  "dependencies": {
+    "bunyan": "^1.8.15",
+    "http": "^0.0.1-security",
+    "pg": "^8.11.0",
+    "pg-protocol": "^1.6.0",
+    "pg-types": "^4.0.1",
+    "postgraphile": "^4.13.0"
+  },
   "devDependencies": {
+    "@types/bunyan": "^1.8.8",
     "@types/express": "^4.17.17",
+    "@types/node": "^20.2.5",
     "@types/pg": "^8.6.6",
-    "dotenv": "^16.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.59.9",
+    "@typescript-eslint/parser": "^5.59.9",
+    "dotenv": "^16.1.4",
+    "eslint": "^8.42.0",
+    "eslint-config-prettier": "^8.8.0",
     "nodemon": "^2.0.22",
+    "prettier": "2.8.8",
     "typescript": "^5.0.4"
   }
 }
