@@ -1,21 +1,20 @@
 FROM node:18-alpine as base
 ENV LANG en_US.utf8
 LABEL description="Instant high-performance GraphQL API for your PostgreSQL database https://github.com/graphile/postgraphile"
-
-# Set Node.js app folder
-RUN mkdir -p /home/node/app/node_modules
-WORKDIR /home/node/app
-
 # Copy dependencies
-COPY ./package*.json .
+WORKDIR /home/node/app
+RUN mkdir /home/node/app/node_modules
+COPY ./package.json ./package-lock.json ./
 RUN chown -R node:node /home/node/app
-
-# Install dependencies
-USER node
 RUN npm install
 
-# Copy application files
-COPY --chown=node:node dist/*.js .
+FROM base as build
+COPY ./index.ts ./tsconfig.json ./
+RUN npx tsc --outDir /tmp/build
 
+FROM base as runtime
+USER node
+WORKDIR /home/node/app
+COPY --from=build --chown=node:node /tmp/build/index.js .
 EXPOSE 3001
-CMD [ "node", "./index.js" ]
+CMD [ "npx", "node", "index.js" ]

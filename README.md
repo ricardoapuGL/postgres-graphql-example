@@ -16,3 +16,8 @@ Other files of interest:
 2. Check [001.sql](./migrations/0001.sql) and [.env](.env) files, modify if needed
 3. Run docker compose up
 4. Interact with the GraphiQL at http://localhost:3001/graphiql
+
+
+### SOurces
+
+- [PostGraphile Repo](https://github.com/graphile/postgraphile)

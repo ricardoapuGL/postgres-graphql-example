@@ -9,8 +9,6 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "build": "tsc",
-    "serve": "node ./dist/index.js",
     "dev": " npx --no-install ts-node --transpile-only ./index.ts ",
     "lint": "npm eslint .",
     "lint:fix": "npm prettier:fix && npm run eslint --fix .",
