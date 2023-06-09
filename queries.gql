@@ -1,0 +1,49 @@
+
+query getAllBooks {
+  allBooks {
+    nodes {
+      bookId
+      publicationDate
+      title
+    }
+  }
+}
+
+
+mutation createBookReview {
+  createBookReview(
+    input: {
+      bookReview: { textReview: "awesome", starReview: "4.9", bookId: 1 }
+    }
+  ) {
+    bookReview {
+      reviewId
+      starReview
+      textReview
+      bookByBookId {
+        title
+        authorByAuthorId {
+          name
+        }
+      }
+    }
+  }
+}
+
+query getAllBookReviews {
+  allBookReviews {
+    edges {
+      node {
+        textReview
+        starReview
+        reviewId
+        bookByBookId {
+          title
+          authorByAuthorId {
+            name
+          }
+        }
+      }
+    }
+  }
+}
